@@ -1,8 +1,10 @@
 describe Money::Dollar do
 
-  it 'should test multiplication' do
+    it 'should test multiplication' do
     five = Money::Dollar.new(5)
-    five.times(2)
-    expect(10).to eql(five.amount)
+    product = five.times(2)
+    expect(product.amount).to eql(10)
+    product = five.times(3)
+    expect(product.amount).to eql(15)
   end
 end
