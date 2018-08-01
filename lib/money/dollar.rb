@@ -13,7 +13,7 @@ module Money
     end
 
     # @param [Dollar] object
-    def equal?(object)
+    def eql?(object)
       @amount == object.amount
     end
   end
