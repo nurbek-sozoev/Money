@@ -8,7 +8,8 @@ module Money
 
     # @param [Money] object
     def eql?(object)
-      @amount == object.instance_variable_get("@amount")
+      @amount == object.instance_variable_get("@amount") &&
+        self.class.eql?(object.class)
     end
   end
 
