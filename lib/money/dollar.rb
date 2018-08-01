@@ -1,7 +1,5 @@
 module Money
   class Dollar
-    attr_reader :amount
-
     # @param [Integer] amount
     def initialize(amount)
       @amount = amount
@@ -14,7 +12,24 @@ module Money
 
     # @param [Dollar] object
     def eql?(object)
-      @amount == object.amount
+      @amount == object.instance_variable_get("@amount")
+    end
+  end
+
+  class Franc
+    # @param [Integer] amount
+    def initialize(amount)
+      @amount = amount
+    end
+
+    # @param [Integer] multiplier
+    def times(multiplier)
+      Franc.new(@amount * multiplier)
+    end
+
+    # @param [Franc] object
+    def eql?(object)
+      @amount == object.instance_variable_get("@amount")
     end
   end
 end
