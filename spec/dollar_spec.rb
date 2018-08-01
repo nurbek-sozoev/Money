@@ -18,4 +18,9 @@ describe BaseMoney do
     expect(BaseMoney.franc(5).eql?(BaseMoney.franc(6))).to be_falsey
     expect(BaseMoney.franc(5).eql?(BaseMoney.dollar(5))).to be_falsey
   end
+
+  it 'should test currency' do
+    expect(BaseMoney.dollar(1).currency).to eql('USD')
+    expect(BaseMoney.franc(1).currency).to eql('CHF')
+  end
 end
