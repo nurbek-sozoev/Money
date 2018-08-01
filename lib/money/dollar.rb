@@ -18,24 +18,25 @@ class BaseMoney
   # @param [BaseMoney] object
   def eql?(object)
     @amount == object.instance_variable_get("@amount") &&
-      self.class.eql?(object.class)
+      @currency == object.currency
+  end
+
+  # @param [Integer] multiplier
+  def times(multiplier)
+    BaseMoney.new(@amount * multiplier, @currency)
   end
 
   def currency
     @currency
   end
+
+  def to_s
+    "#{@amount} #{@currency}"
+  end
 end
 
 class Dollar < BaseMoney
-  # @param [Integer] multiplier
-  def times(multiplier)
-    BaseMoney.dollar(@amount * multiplier)
-  end
 end
 
 class Franc < BaseMoney
-  # @param [Integer] multiplier
-  def times(multiplier)
-    BaseMoney.franc(@amount * multiplier)
-  end
 end
