@@ -23,8 +23,4 @@ describe BaseMoney do
     expect(BaseMoney.dollar(1).currency).to eql('USD')
     expect(BaseMoney.franc(1).currency).to eql('CHF')
   end
-
-  it 'should test different class equality' do
-    expect(BaseMoney.new(10, 'CHF')).to eql(Franc.new(10, 'CHF'))
-  end
 end

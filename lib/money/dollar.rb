@@ -7,12 +7,12 @@ class BaseMoney
 
   # @param [Integer] amount
   def self.dollar(amount)
-    Dollar.new(amount, 'USD')
+    BaseMoney.new(amount, 'USD')
   end
 
   # @param [Integer] amount
   def self.franc(amount)
-    Franc.new(amount, 'CHF')
+    BaseMoney.new(amount, 'CHF')
   end
 
   # @param [BaseMoney] object
@@ -33,10 +33,4 @@ class BaseMoney
   def to_s
     "#{@amount} #{@currency}"
   end
-end
-
-class Dollar < BaseMoney
-end
-
-class Franc < BaseMoney
 end
