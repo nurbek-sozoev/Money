@@ -15,5 +15,7 @@ describe 'Money' do
   it 'should test equality' do
     expect(Money::Dollar.new(5).eql?(Money::Dollar.new(5))).to be_truthy
     expect(Money::Dollar.new(5).eql?(Money::Dollar.new(6))).to be_falsey
+    expect(Money::Franc.new(5).eql?(Money::Franc.new(5))).to be_truthy
+    expect(Money::Franc.new(5).eql?(Money::Franc.new(6))).to be_falsey
   end
 end
