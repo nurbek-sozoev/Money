@@ -11,5 +11,10 @@ module Money
     def times(multiplier)
       Dollar.new(@amount * multiplier)
     end
+
+    # @param [Dollar] object
+    def equal?(object)
+      @amount == object.amount
+    end
   end
 end
