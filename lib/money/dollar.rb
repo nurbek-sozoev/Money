@@ -1,4 +1,4 @@
-class BaseMoney
+class Money
   attr_reader :amount
 
   # @param [Integer] amount
@@ -9,25 +9,25 @@ class BaseMoney
 
   # @param [Integer] amount
   def self.dollar(amount)
-    BaseMoney.new(amount, 'USD')
+    Money.new(amount, 'USD')
   end
 
   # @param [Integer] amount
   def self.franc(amount)
-    BaseMoney.new(amount, 'CHF')
+    Money.new(amount, 'CHF')
   end
 
-  # @param [BaseMoney] object
+  # @param [Money] object
   def eql?(object)
     @amount == object.amount && @currency == object.currency
   end
 
   # @param [Integer] multiplier
   def times(multiplier)
-    BaseMoney.new(@amount * multiplier, @currency)
+    Money.new(@amount * multiplier, @currency)
   end
 
-  # @param [BaseMoney] addend
+  # @param [Money] addend
   def plus(addend)
     Sum.new(self, addend)
   end
@@ -57,14 +57,14 @@ end
 class Sum
   attr_reader :augend, :addend
 
-  # @param [BaseMoney] augend
-  # @param [BaseMoney] addend
+  # @param [Money] augend
+  # @param [Money] addend
   def initialize(augend, addend)
     @augend = augend
     @addend = addend
   end
 
   def reduce(to)
-    BaseMoney.new(@augend.amount + @addend.amount, to)
+    Money.new(@augend.amount + @addend.amount, to)
   end
 end
