@@ -23,4 +23,33 @@ describe BaseMoney do
     expect(BaseMoney.dollar(1).currency).to eql('USD')
     expect(BaseMoney.franc(1).currency).to eql('CHF')
   end
+
+  it 'should test simple addition' do
+    five = BaseMoney.dollar(5)
+    sum = five.plus(five)
+    bank = Bank.new
+    reduced = bank.reduce(sum, 'USD')
+    expect(BaseMoney.dollar(10)).to eql(reduced)
+  end
+
+  it 'should test plus returns sum' do
+    five = BaseMoney.dollar(5)
+    sum = five.plus(five)
+    expect(five).to eql(sum.augend)
+    expect(five).to eql(sum.addend)
+  end
+
+  it 'should reduce sum' do
+    sum = Sum.new(BaseMoney.dollar(3), BaseMoney.dollar(4))
+    bank = Bank.new
+    result = bank.reduce(sum, 'USD')
+    expect(BaseMoney.dollar(7)).to eql(result)
+  end
+
+  it 'should reduce money' do
+    bank = Bank.new
+    result = bank.reduce(BaseMoney.dollar(1), 'USD')
+    expect(BaseMoney.dollar(1)).to eql(result)
+  end
+
 end
