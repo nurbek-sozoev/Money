@@ -1,5 +1,5 @@
 class Money
-  attr_reader :amount
+  attr_reader :amount, :currency
 
   # @param [Integer] amount
   def initialize(amount, currency)
@@ -19,12 +19,12 @@ class Money
 
   # @param [Money] object
   def eql?(object)
-    @amount == object.amount && @currency == object.currency
+    amount == object.amount && currency == object.currency
   end
 
   # @param [Integer] multiplier
   def times(multiplier)
-    Money.new(@amount * multiplier, @currency)
+    Money.new(amount * multiplier, currency)
   end
 
   # @param [Money] addend
@@ -33,24 +33,40 @@ class Money
   end
 
   # @param [String] to
-  def reduce(to)
-    self
-  end
-
-  def currency
-    @currency
+  # @param [Bank] bank
+  def reduce(bank, to)
+    rate = bank.rate(currency, to)
+    Money.new(amount / rate, to)
   end
 
   def to_s
-    "#{@amount} #{@currency}"
+    "#{amount} #{currency}"
   end
 end
 
 class Bank
+  def initialize
+    @rates = {}
+  end
+
   # @param [Object] source
   # @param [String] to
   def reduce(source, to)
-    source.reduce(to)
+    source.reduce(self, to)
+  end
+
+  # @param [String] from
+  # @param [String] to
+  # @param [Integer] amount
+  def add_rate(from, to, amount)
+    @rates[[from, to]] = amount
+  end
+
+  # @param [String] from
+  # @param [String] to
+  def rate(from, to)
+    return 1 if from == to
+    @rates.fetch([from, to])
   end
 end
 
@@ -64,7 +80,15 @@ class Sum
     @addend = addend
   end
 
-  def reduce(to)
-    Money.new(@augend.amount + @addend.amount, to)
+  # @param [Bank] bank
+  # @param [String] to
+  def reduce(bank, to)
+    amount = augend.reduce(bank, to).amount + addend.reduce(bank, to).amount
+    Money.new(amount, to)
+  end
+
+  # @param [Money] addend
+  def plus(addend)
+    Sum.new(self, addend)
   end
 end

@@ -51,4 +51,34 @@ describe Money do
     result = bank.reduce(Money.dollar(1), 'USD')
     expect(Money.dollar(1)).to eql(result)
   end
+
+  it 'should reduce money in different currency' do
+    bank = Bank.new
+    bank.add_rate('CHF', 'USD', 2)
+    result = bank.reduce(Money.franc(2), 'USD')
+    expect(Money.dollar(1)).to eql(result)
+  end
+
+  it 'should test identity rate' do
+    expect(Bank.new.rate('USD', 'USD')).to eql(1)
+  end
+
+  it 'should test mixed addition' do
+    five_bucks = Money.dollar(5)
+    ten_francs = Money.franc(10)
+    bank = Bank.new
+    bank.add_rate('CHF', 'USD', 2)
+    result = bank.reduce(five_bucks.plus(ten_francs), 'USD')
+    expect(Money.dollar(10)).to eql(result)
+  end
+
+  it 'should test sum plus money' do
+    five_bucks = Money.dollar(5)
+    ten_francs = Money.franc(10)
+    bank = Bank.new
+    bank.add_rate('CHF', 'USD', 2)
+    sum = Sum.new(five_bucks, ten_francs).plus(five_bucks)
+    result = bank.reduce(sum, 'USD')
+    expect(Money.dollar(15)).to eql(result)
+  end
 end
