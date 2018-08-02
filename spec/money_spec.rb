@@ -72,7 +72,7 @@ describe Money do
     expect(Money.dollar(10)).to eql(result)
   end
 
-  it 'should test sum plus money' do
+  it 'should sum plus money' do
     five_bucks = Money.dollar(5)
     ten_francs = Money.franc(10)
     bank = Bank.new
@@ -80,5 +80,15 @@ describe Money do
     sum = Sum.new(five_bucks, ten_francs).plus(five_bucks)
     result = bank.reduce(sum, 'USD')
     expect(Money.dollar(15)).to eql(result)
+  end
+
+  it 'should sum times' do
+    five_bucks = Money.dollar(5)
+    ten_francs = Money.franc(10)
+    bank = Bank.new
+    bank.add_rate('CHF', 'USD', 2)
+    sum = Sum.new(five_bucks, ten_francs).times(2)
+    result = bank.reduce(sum, 'USD')
+    expect(Money.dollar(20)).to eql(result)
   end
 end
