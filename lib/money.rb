@@ -1,2 +1,2 @@
 require 'rubygems'
-require 'money/dollar'
+require 'money/money'
