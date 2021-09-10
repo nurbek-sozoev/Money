@@ -1,2 +1,2 @@
 # Money
-Реализация класса Money из книги К. Бека "TDD Extreme Programming" 
+The Money class implementation from the "TDD Extreme Programming" by Kent Beck
